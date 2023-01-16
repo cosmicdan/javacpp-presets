@@ -150,6 +150,7 @@ if [ "${preset_enable_zlib-false}" = true ] ; then
     tar --totals -xzf ../$ZLIB.tar.gz
     ENABLE+=" --enable-zlib"
     javacppPresetsFFmpeg_build_zlib
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_LAME-false}" = true ] ; then
     echo "    [#] LAME..."
@@ -157,24 +158,28 @@ if [ "${preset_enable_LAME-false}" = true ] ; then
     patch -Np1 -d $LAME < ../../lame.patch
     ENABLE+=" --enable-libmp3lame"
     javacppPresetsFFmpeg_build_LAME
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_xml2-false}" = true ] ; then
     echo "    [#] XML2..."
     tar --totals -xzf ../$XML2.tar.gz
     ENABLE+=" --enable-libxml2"
     javacppPresetsFFmpeg_build_XML2
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_speex-false}" = true ] ; then
     echo "    [#] speex..."
     tar --totals -xzf ../$SPEEX.tar.gz
     ENABLE+=" --enable-libspeex"
     javacppPresetsFFmpeg_build_speex
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_opus-false}" = true ] ; then
     echo "    [#] opus..."
     tar --totals -xzf ../$OPUS.tar.gz
     ENABLE+=" --enable-libopus"
     javacppPresetsFFmpeg_build_opus
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_amr-false}" = true ] ; then
     echo "    [#] AMR..."
@@ -182,6 +187,7 @@ if [ "${preset_enable_amr-false}" = true ] ; then
     tar --totals -xzf ../$VO_AMRWBENC.tar.gz
     ENABLE+=" --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvo-amrwbenc"
     javacppPresetsFFmpeg_build_amr
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_openssl-false}" = true ] ; then
     echo "    [#] openssl..."
@@ -189,24 +195,28 @@ if [ "${preset_enable_openssl-false}" = true ] ; then
     patch -Np1 -d $OPENSSL < ../../openssl-android.patch
     ENABLE+=" --enable-openssl"
     javacppPresetsFFmpeg_build_openssl
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_srt-false}" = true ] ; then
     echo "    [#] srt..."
     tar --totals -xzf ../srt-$LIBSRT_VERSION.tar.gz
     ENABLE+=" --enable-libsrt"
     javacppPresetsFFmpeg_build_srt
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_openh264-false}" = true ] ; then
     echo "    [#] OpenH264..."
     tar --totals -xzf ../openh264-$OPENH264_VERSION.tar.gz
     ENABLE+=" --enable-libopenh264"
     javacppPresetsFFmpeg_build_openh264
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_x264-false}" = true ] ; then
     echo "    [#] x264..."
     tar --totals -xzf ../$X264.tar.gz
     ENABLE+=" --enable-libx264"
     javacppPresetsFFmpeg_build_x264
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_x265-false}" = true ] ; then
     echo "    [#] x265..."
@@ -215,33 +225,39 @@ if [ "${preset_enable_x265-false}" = true ] ; then
     sedinplace 's/detect512()/false/g' x265-*/source/common/quant.cpp
     ENABLE+=" --enable-libx265"
     javacppPresetsFFmpeg_build_x265
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_libvpx-false}" = true ] ; then
     echo "    [#] libvpx..."
     tar --totals -xzf ../libvpx-$VPX_VERSION.tar.gz
     ENABLE+=" --enable-libvpx"
     javacppPresetsFFmpeg_build_libvpx
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_webp-false}" = true ] ; then
     echo "    [#] webp..."
     tar --totals -xzf ../libwebp-$WEBP_VERSION.tar.gz
     ENABLE+=" --enable-libwebp"
     javacppPresetsFFmpeg_build_libwebp
+    cd "$INSTALL_PATH"
 fi
 if [ "${preset_enable_freetype-false}" = true ] ; then
     echo "    [#] freetype..."
     tar --totals -xJf ../freetype-$FREETYPE_VERSION.tar.xz
     ENABLE+=" --enable-libfreetype"
     javacppPresetsFFmpeg_build_freetype
+    cd "$INSTALL_PATH"
 fi
 
 echo "    [#] mfx [Intel MediaSDK]..."
 tar --totals -xzf ../mfx_dispatch-$MFX_VERSION.tar.gz
 javacppPresetsFFmpeg_build_mfx
+cd "$INSTALL_PATH"
 
 echo "    [#] nvcodec [NVENC/NVDEC/CUVID]..."
 tar --totals -xzf ../nv-codec-headers-$NVCODEC_VERSION.tar.gz
 javacppPresetsFFmpeg_build_nvcodec
+cd "$INSTALL_PATH"
 
 echo ""
 echo ""
@@ -261,9 +277,6 @@ patch -Np1 -d ffmpeg-$FFMPEG_VERSION < ../../ffmpeg.patch
 patch -Np1 -d ffmpeg-$FFMPEG_VERSION < ../../ffmpeg-flv-support-hevc-opus.patch
 javacppPresetsFFmpeg_build_ffmpeg
 
-
-# rest doesn't really matter, parent cppbuild popd's
-# back to javacpp-presets/ffmpeg/cppbuild/$PLATFORM
 cd "$INSTALL_PATH"
 # back to javacpp-presets/ffmpeg
 cd ../..
