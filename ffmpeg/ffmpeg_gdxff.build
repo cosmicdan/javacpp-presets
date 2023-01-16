@@ -7,12 +7,27 @@ ENABLE="--enable-shared --enable-runtime-cpudetect"
 # disable all encoders
 DISABLE+=" --disable-encoders"
 
+# from default, only encoders so disabled
+#preset_enable_opus=true
+#preset_enable_webp=true
 
+# needed by other stuff
 preset_enable_zlib=true
 preset_enable_xml2=true
-preset_enable_speex=true
-preset_enable_opus=true
 preset_enable_openssl=true
+
+# extra decoders
+preset_enable_speex=true
 preset_enable_libvpx=true
-preset_enable_webp=true
+
+# freetype support (only usable via drawtext...?)
 preset_enable_freetype=true
+# font fallback and the font option 
+# TODO: SOURCE
+#ENABLE+=" --enable-libfontconfig"
+# text_shaping option
+# TODO: SOURCE
+#ENABLE+=" --enable-libfribidi"
+
+
+
