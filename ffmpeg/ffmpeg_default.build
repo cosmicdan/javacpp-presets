@@ -1,3 +1,20 @@
+# defaults
 DISABLE="--disable-iconv --disable-opencl --disable-sdl2 --disable-bzlib --disable-lzma --disable-linux-perf --disable-xlib"
-ENABLE="--enable-shared --enable-version3 --enable-runtime-cpudetect --enable-zlib --enable-libmp3lame --enable-libspeex --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvo-amrwbenc --enable-openssl --enable-libopenh264 --enable-libvpx --enable-libfreetype --enable-libopus --enable-libxml2 --enable-libsrt --enable-libwebp"
+ENABLE="--enable-shared --enable-runtime-cpudetect"
 
+# enable lgplv3 for AMR
+ENABLE+=" --enable-version3"
+
+# defaults
+preset_enable_zlib=true
+preset_enable_LAME=true
+preset_enable_xml2=true
+preset_enable_speex=true
+preset_enable_opus=true
+preset_enable_amr=true
+preset_enable_openssl=true
+preset_enable_srt=true
+preset_enable_openh264=true
+preset_enable_libvpx=true
+preset_enable_webp=true
+preset_enable_freetype=true

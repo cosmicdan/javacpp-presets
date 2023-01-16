@@ -1,65 +1,86 @@
 #windows-x86_64)
-    echo ""
-    echo "--------------------"
-    echo "Building zlib"
-    echo "--------------------"
-    echo ""
-    cd $ZLIB
+javacppPresetsFFmpeg_build_zlib() {
+    cd "$INSTALL_PATH/$ZLIB"
     make -j $MAKEJ install -fwin32/Makefile.gcc BINARY_PATH=$INSTALL_PATH/bin/ INCLUDE_PATH=$INSTALL_PATH/include/ LIBRARY_PATH=$INSTALL_PATH/lib/
-    echo ""
-    echo "--------------------"
-    echo "Building LAME"
-    echo "--------------------"
-    echo ""
-    cd ../$LAME
+}
+
+javacppPresetsFFmpeg_build_LAME() {
+    cd "$INSTALL_PATH/$LAME"
     ./configure --prefix=$INSTALL_PATH --disable-frontend --disable-shared --with-pic --build=x86_64-w64-mingw32 CFLAGS="-m64"
     make -j $MAKEJ V=0
     make install
+}
+
+javacppPresetsFFmpeg_build_XML2() {
     echo ""
     echo "--------------------"
     echo "Building XML2"
     echo "--------------------"
     echo ""
-    cd ../$XML2
+    cd "$INSTALL_PATH/$XML2"
     ./configure --prefix=$INSTALL_PATH $LIBXML_CONFIG --build=x86_64-w64-mingw32 CFLAGS="-m64"
     make -j $MAKEJ V=0
     make install
+}
+
+javacppPresetsFFmpeg_build_speex() {
     echo ""
     echo "--------------------"
     echo "Building speex"
     echo "--------------------"
     echo ""
-    cd ../$SPEEX
+    cd "$INSTALL_PATH/$SPEEX"
     PKG_CONFIG= ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --build=x86_64-w64-mingw32 CFLAGS="-m64"
     make -j $MAKEJ V=0
     make install
-    cd ../$OPUS
+}    
+    
+javacppPresetsFFmpeg_build_opus() {
+    cd "$INSTALL_PATH/$OPUS"
     ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --build=x86_64-w64-mingw32 CFLAGS="-m64"
     make -j $MAKEJ V=0
     make install
-    cd ../$OPENCORE_AMR
+}
+
+javacppPresetsFFmpeg_build_amr() {
+    cd "$INSTALL_PATH/$OPENCORE_AMR"
     ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --build=x86_64-w64-mingw32 CFLAGS="-m64" CXXFLAGS="-m64"
     make -j $MAKEJ V=0
     make install
-    cd ../$VO_AMRWBENC
+    cd "$INSTALL_PATH/$VO_AMRWBENC"
     ./configure --prefix=$INSTALL_PATH --disable-shared --with-pic --build=x86_64-w64-mingw32 CFLAGS="-m64" CXXFLAGS="-m64"
     make -j $MAKEJ V=0
     make install
-    cd ../$OPENSSL
+}
+
+javacppPresetsFFmpeg_build_openssl() {    
+    cd "$INSTALL_PATH/$OPENSSL"
     ./Configure mingw64 -fPIC no-shared --prefix=$INSTALL_PATH --libdir=lib
     make -s -j $MAKEJ
     make install_sw
-    cd ../srt-$LIBSRT_VERSION
+}
+
+javacppPresetsFFmpeg_build_srt() {
+    cd "$INSTALL_PATH/srt-$LIBSRT_VERSION"
     CC="gcc -m64" CXX="g++ -m64" CFLAGS="-I$INSTALL_PATH/include/" CXXFLAGS="-I$INSTALL_PATH/include/" LDFLAGS="-L$INSTALL_PATH/lib/" $CMAKE -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DENABLE_STDCXX_SYNC=ON .
     make -j $MAKEJ V=0
     make install
-    cd ../openh264-$OPENH264_VERSION
+}
+    
+javacppPresetsFFmpeg_build_openh264() {
+    cd "$INSTALL_PATH/openh264-$OPENH264_VERSION"
     make -j $MAKEJ DESTDIR=./ PREFIX=.. AR=ar ARCH=x86_64 USE_ASM=No install-static
-    cd ../$X264
+}
+
+javacppPresetsFFmpeg_build_x264() {
+    cd "$INSTALL_PATH/$X264"
     ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-opencl --host=x86_64-w64-mingw32
     make -j $MAKEJ V=0
     make install
-    cd ../x265-$X265/build/linux
+}
+
+javacppPresetsFFmpeg_build_x265() {    
+    cd "$INSTALL_PATH/x265-$X265/build/linux"
     # from x265 multilib.sh
     mkdir -p 8bit 10bit 12bit
 
@@ -90,29 +111,47 @@ EOF
     make install
     # ----
     cd ../../../
-    cd ../libvpx-$VPX_VERSION
+}
+
+javacppPresetsFFmpeg_build_libvpx() {
+    cd "$INSTALL_PATH/libvpx-$VPX_VERSION"
     ./configure --prefix=$INSTALL_PATH --enable-static --enable-pic --disable-examples --disable-unit-tests --target=x86_64-win64-gcc --disable-avx512
     make -j $MAKEJ
     make install
-    cd ../libwebp-$WEBP_VERSION
+}
+
+javacppPresetsFFmpeg_build_libwebp() {    
+    cd "$INSTALL_PATH/libwebp-$WEBP_VERSION"
     CC="gcc -m64" CXX="g++ -m64" CFLAGS="-I$INSTALL_PATH/include/" CXXFLAGS="-I$INSTALL_PATH/include/" LDFLAGS="-L$INSTALL_PATH/lib/" $CMAKE -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $WEBP_CONFIG .
     make -j $MAKEJ V=0
     make install
-    cd ../freetype-$FREETYPE_VERSION
+}
+
+javacppPresetsFFmpeg_build_freetype() {
+    cd "$INSTALL_PATH/freetype-$FREETYPE_VERSION"
     ./configure --prefix=$INSTALL_PATH --with-bzip2=no --with-harfbuzz=no --with-png=no --with-brotli=no --enable-static --disable-shared --with-pic --host=x86_64-w64-mingw32 CFLAGS="-m64"
     make -j $MAKEJ
     make install
-    cd ../mfx_dispatch-$MFX_VERSION
+}
+
+javacppPresetsFFmpeg_build_mfx() {
+    cd "$INSTALL_PATH/mfx_dispatch-$MFX_VERSION"
     sedinplace 's:${SOURCES}:${SOURCES} src/mfx_driver_store_loader.cpp:g' CMakeLists.txt
     CC="gcc -m64" CXX="g++ -m64" $CMAKE -G "MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release .
     make -j $MAKEJ
     make install
-    cd ../nv-codec-headers-n$NVCODEC_VERSION
+}
+
+javacppPresetsFFmpeg_build_nvcodec() {
+    cd "$INSTALL_PATH/nv-codec-headers-n$NVCODEC_VERSION"
     make install PREFIX=$INSTALL_PATH
-    cd ../ffmpeg-$FFMPEG_VERSION
-    PKG_CONFIG_PATH=../lib/pkgconfig/ ./configure --prefix=.. $DISABLE $ENABLE --enable-cuda --enable-cuvid --enable-nvenc --enable-libmfx --enable-w32threads --enable-indev=dshow --target-os=mingw32 --cc="gcc -m64" --extra-cflags="-DLIBXML_STATIC -I../include/ -I../include/libxml2/" --extra-ldflags="-L../lib/" --extra-libs="-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lgcc_eh -lWs2_32 -lcrypt32 -lpthread -lz -lm -Wl,-Bdynamic -lole32 -luuid"
+}
+
+internalPlatformFfParams="--enable-cuda --enable-cuvid --enable-nvenc --enable-libmfx --enable-w32threads --enable-indev=dshow --target-os=mingw32"
+
+javacppPresetsFFmpeg_build_ffmpeg() {
+    cd "$INSTALL_PATH/ffmpeg-$FFMPEG_VERSION"
+    PKG_CONFIG_PATH=../lib/pkgconfig/ ./configure --prefix=.. $DISABLE $ENABLE $internalPlatformFfParams --cc="gcc -m64" --extra-cflags="-DLIBXML_STATIC -I../include/ -I../include/libxml2/" --extra-ldflags="-L../lib/" --extra-libs="-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lgcc_eh -lWs2_32 -lcrypt32 -lpthread -lz -lm -Wl,-Bdynamic -lole32 -luuid"
     make -j $MAKEJ
     make install
-
-    cd ../..
-
+}
