@@ -56,6 +56,7 @@ NVCODEC_VERSION=11.1.5.1
 XML2=libxml2-2.9.12
 LIBSRT_VERSION=1.5.0
 WEBP_VERSION=1.2.4
+DAV1D_VERSION=1.0.0
 FFMPEG_VERSION=5.1.2
 
 echo ""
@@ -85,6 +86,7 @@ download http://xmlsoft.org/sources/$XML2.tar.gz $XML2.tar.gz
 download https://github.com/Haivision/srt/archive/refs/tags/v$LIBSRT_VERSION.tar.gz srt-$LIBSRT_VERSION.tar.gz
 download https://github.com/FFmpeg/nv-codec-headers/archive/n$NVCODEC_VERSION.tar.gz nv-codec-headers-$NVCODEC_VERSION.tar.gz
 download https://github.com/webmproject/libwebp/archive/refs/tags/v$WEBP_VERSION.tar.gz libwebp-$WEBP_VERSION.tar.gz
+download https://code.videolan.org/videolan/dav1d/-/archive/$DAV1D_VERSION/dav1d-$DAV1D_VERSION.tar.gz dav1d-$DAV1D_VERSION.tar.gz
 download http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 ffmpeg-$FFMPEG_VERSION.tar.bz2
 
 mkdir -p $PLATFORM$EXTENSION
@@ -246,6 +248,14 @@ if [ "${preset_enable_freetype-false}" = true ] ; then
     tar --totals -xJf ../freetype-$FREETYPE_VERSION.tar.xz
     ENABLE+=" --enable-libfreetype"
     javacppPresetsFFmpeg_build_freetype
+    cd "$INSTALL_PATH"
+fi
+if [ "${preset_enable_libdav1d-false}" = true ] ; then
+    echo "    [#] libdav1d..."
+    # WIP, DO NOT USE. Currently using prebuilt libdav1d.dll from mingw64
+    #tar --totals -xzf ../dav1d-$DAV1D_VERSION.tar.gz
+    #javacppPresetsFFmpeg_build_dav1d
+    ENABLE+=" --enable-libdav1d"
     cd "$INSTALL_PATH"
 fi
 

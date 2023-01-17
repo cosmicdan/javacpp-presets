@@ -134,6 +134,12 @@ javacppPresetsFFmpeg_build_freetype() {
     make install
 }
 
+javacppPresetsFFmpeg_build_dav1d() {
+    # WIP, DO NOT USE. Currently using prebuilt libdav1d.dll from mingw64
+    cd "$INSTALL_PATH/dav1d-$DAV1D_VERSION"
+    PATH="/opt/bin:/mingw64/lib/gcc/x86_64-w64-mingw32/12.2.0:$PATH" meson build -Denable_tools=true -Denable_examples=false -Dfuzzing_engine=none -Denable_tests=false -Dtestdata_tests=false --cross-file=package/crossfiles/x86_64-w64-mingw32.meson
+}
+
 javacppPresetsFFmpeg_build_mfx() {
     cd "$INSTALL_PATH/mfx_dispatch-$MFX_VERSION"
     sedinplace 's:${SOURCES}:${SOURCES} src/mfx_driver_store_loader.cpp:g' CMakeLists.txt

@@ -14,11 +14,19 @@ DISABLE+=" --disable-encoders"
 # needed by other stuff
 preset_enable_zlib=true
 preset_enable_xml2=true
-preset_enable_openssl=true
+#preset_enable_openssl=true
+
+# disable all networking (we'll do networking ourselves on GdxFf's side)
+DISABLE+=" --disable-network"
+
+# enable opengl output
+# TODO: Might not end up using it for GdxFf
+ENABLE+=" --enable-opengl"
 
 # extra decoders
 preset_enable_speex=true
 preset_enable_libvpx=true
+preset_enable_libdav1d=true
 
 # freetype support (only usable via drawtext...?)
 preset_enable_freetype=true
@@ -29,5 +37,27 @@ preset_enable_freetype=true
 # TODO: SOURCE
 #ENABLE+=" --enable-libfribidi"
 
+# disable all input devices...
+DISABLE+=" --disable-indevs"
+# ...except libavfilter input virtual device
+# TODO: Unknown if GdxFf will ever use this itself
+#ENABLE+=" --enable-indev=lavfi"
 
+# disable all protocols...
+DISABLE+=" --disable-protocols"
+# ...except async...
+# TODO: Will I use this...?
+#ENABLE+=" --enable-protocol=async"
+# ...data... ( used to e.g. decode a PNG from a base64 string )
+ENABLE+=" --enable-protocol=data"
+# file descriptor...
+ENABLE+=" --enable-protocol=fd"
+# file...
+ENABLE+=" --enable-protocol=file"
+# pipe...
+ENABLE+=" --enable-protocol=pipe"
+# subfile...
+ENABLE+=" --enable-protocol=subfile"
+# unix...
+ENABLE+=" --enable-protocol=unix"
 
