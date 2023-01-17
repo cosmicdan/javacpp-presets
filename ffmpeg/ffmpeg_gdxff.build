@@ -4,6 +4,9 @@ ENABLE="--enable-shared --enable-runtime-cpudetect"
 
 ### GdxFf
 
+# enable lgplv3 because GdxFf is LGPLv3 anyway
+ENABLE+=" --enable-version3"
+
 # disable all encoders
 DISABLE+=" --disable-encoders"
 
