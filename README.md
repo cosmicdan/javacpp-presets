@@ -1,6 +1,8 @@
 JavaCPP Presets
 ===============
 
+NOTE: Custom fork for FF4GDX. Used by https://github.com/FF4GDX/NativeBuildEnv 
+
 [![Gitter](https://badges.gitter.im/bytedeco/javacpp.svg)](https://gitter.im/bytedeco/javacpp) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.bytedeco/javacpp-presets/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.bytedeco/javacpp-presets) [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/org.bytedeco/javacpp-presets.svg)](http://bytedeco.org/builds/)  
 <sup>Build status for all platforms (Android, iOS, Linux, Mac OS X, Windows):</sup>
 [![opencv](https://github.com/bytedeco/javacpp-presets/workflows/opencv/badge.svg)](https://github.com/bytedeco/javacpp-presets/actions?query=workflow%3Aopencv)
